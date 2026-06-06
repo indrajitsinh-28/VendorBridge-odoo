@@ -4,8 +4,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import (
+    activity_log_router,
     analytics_router,
+    approval_router,
     comparison_router,
+    dashboard_router,
     invoice_router,
     purchase_order_router,
     quotation_router,
@@ -30,6 +33,9 @@ app.include_router(purchase_order_router)
 app.include_router(invoice_router)
 app.include_router(analytics_router)
 app.include_router(auth_router)
+app.include_router(approval_router)
+app.include_router(activity_log_router)
+app.include_router(dashboard_router)
 
 
 @app.get("/health", tags=["Health"])
