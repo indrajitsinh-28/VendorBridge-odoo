@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock, User, Briefcase } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Mail, User, Briefcase } from "lucide-react";
 import { AuthLayout } from "../../layouts/AuthLayout";
-import { FormCard } from "../../components/ui/FormCard";
-import { Input } from "../../components/ui/Input";
-import { Button } from "../../components/ui/Button";
+import { FormCard } from "../../Components/ui/FormCard";
+import { Input } from "../../Components/ui/Input";
+import { Button } from "../../Components/ui/Button";
 
 export function SignupPage() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
@@ -48,7 +49,7 @@ export function SignupPage() {
       newErrors.confirmPassword = "Passwords do not match";
     }
     if (!formData.role) newErrors.role = "Role selection is required";
-    if (!formData.termsAccepted) newErrors.termsAccepted = "false" as any; // use a truthy string or proper type for errors
+    if (!formData.termsAccepted) newErrors.termsAccepted = "false" as unknown as boolean; // use a truthy string or proper type for errors
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -58,8 +59,10 @@ export function SignupPage() {
     e.preventDefault();
     if (validate()) {
       console.log("Signup form submitted:", formData);
+      navigate("/vendormanagement");
     }
   };
+
 
   return (
     <AuthLayout>

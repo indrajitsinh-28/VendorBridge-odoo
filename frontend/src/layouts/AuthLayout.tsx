@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { ThemeToggle } from "../Components/ThemeToggle";
 
 export function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
