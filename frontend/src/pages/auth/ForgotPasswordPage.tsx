@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { AuthLayout } from "../../layouts/AuthLayout";
-import { FormCard } from "../../components/ui/FormCard";
-import { Input } from "../../components/ui/Input";
-import { Button } from "../../components/ui/Button";
+import { FormCard } from "../../Components/ui/FormCard";
+import { Input } from "../../Components/ui/Input";
+import { Button } from "../../Components/ui/Button";
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

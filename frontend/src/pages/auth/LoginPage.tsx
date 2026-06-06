@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Mail } from "lucide-react";
 import { AuthLayout } from "../../layouts/AuthLayout";
-import { FormCard } from "../../components/ui/FormCard";
-import { Input } from "../../components/ui/Input";
-import { Button } from "../../components/ui/Button";
+import { FormCard } from "../../Components/ui/FormCard";
+import { Input } from "../../Components/ui/Input";
+import { Button } from "../../Components/ui/Button";
 
 export function LoginPage() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "", rememberMe: false });
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
@@ -30,8 +31,10 @@ export function LoginPage() {
     if (validate()) {
       console.log("Login form submitted:", formData);
       // Backend integration logic goes here
+      navigate("/vendormanagement");
     }
   };
+
 
   return (
     <AuthLayout>
