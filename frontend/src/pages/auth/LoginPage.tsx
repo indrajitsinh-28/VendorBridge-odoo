@@ -39,13 +39,13 @@ export function LoginPage() {
 
   return (
     <AuthLayout>
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-foreground">Welcome back</h2>
-        <p className="text-muted mt-2">Please enter your details to sign in.</p>
+      <div className="mb-4">
+        <h2 className="text-xl lg:text-2xl font-bold text-foreground">Welcome back</h2>
+        <p className="text-xs text-muted mt-1">Please enter your details to sign in.</p>
       </div>
 
       <FormCard>
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             label="Email"
             type="email"
@@ -75,7 +75,7 @@ export function LoginPage() {
             }
           />
 
-          <div className="flex items-center justify-between pt-1">
+          <div className="flex items-center justify-between pt-0.5">
             <label className="flex items-center space-x-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -83,30 +83,30 @@ export function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
                 className="w-4 h-4 rounded border-muted/30 text-primary focus:ring-primary bg-transparent"
               />
-              <span className="text-sm text-foreground">Remember me</span>
+              <span className="text-xs text-foreground">Remember me</span>
             </label>
             <Link
               to="/forgot-password"
-              className="text-sm font-medium text-primary hover:underline"
+              className="text-xs font-medium text-primary hover:underline"
             >
               Forgot Password?
             </Link>
           </div>
 
-          <Button type="submit" fullWidth className="mt-6">
+          <Button type="submit" fullWidth className="mt-4">
             Sign In
           </Button>
 
-          <div className="relative my-6">
+          <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-muted/20"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
+            <div className="relative flex justify-center text-xs">
               <span className="px-2 bg-card text-muted">OR</span>
             </div>
           </div>
 
-          <Button type="button" variant="outline" fullWidth className="flex items-center gap-2">
+          <Button type="button" variant="outline" fullWidth className="flex items-center justify-center gap-2 h-10 text-xs">
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -128,7 +128,7 @@ export function LoginPage() {
             Continue with Google
           </Button>
 
-          <p className="text-center text-sm text-muted mt-6">
+          <p className="text-center text-xs text-muted mt-4">
             Don't have an account?{" "}
             <Link to="/signup" className="font-medium text-primary hover:underline">
               Create Account

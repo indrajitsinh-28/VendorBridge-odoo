@@ -37,16 +37,16 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthLayout>
-      <div className="mb-8">
+      <div className="mb-4">
         <Link
           to="/login"
-          className="inline-flex items-center text-sm font-medium text-muted hover:text-foreground transition-colors mb-6"
+          className="inline-flex items-center text-xs font-medium text-muted hover:text-foreground transition-colors mb-4"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
+          <ArrowLeft className="w-4.5 h-4.5 mr-2" />
           Back to Login
         </Link>
-        <h2 className="text-2xl font-bold text-foreground">Forgot Password</h2>
-        <p className="text-muted mt-2">
+        <h2 className="text-xl lg:text-2xl font-bold text-foreground">Forgot Password</h2>
+        <p className="text-xs text-muted mt-1">
           Enter your email address and we'll send you a link to reset your password.
         </p>
       </div>

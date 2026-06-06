@@ -67,9 +67,9 @@ export function SignupPage() {
 
   return (
     <AuthLayout>
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-foreground">Create an Account</h2>
-        <p className="text-muted mt-2">Join VyaparSetu to streamline your procurement.</p>
+      <div className="mb-4">
+        <h2 className="text-xl lg:text-2xl font-bold text-foreground">Create an Account</h2>
+        <p className="text-xs text-muted mt-1">Join VyaparSetu to streamline your procurement.</p>
       </div>
 
       <FormCard>
