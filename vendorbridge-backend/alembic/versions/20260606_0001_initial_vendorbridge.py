@@ -17,14 +17,54 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
+    # --- Her original enums ---
     rfq_status = postgresql.ENUM("draft", "open", "closed", "cancelled", name="rfq_status")
     quotation_status = postgresql.ENUM("draft", "submitted", "accepted", "rejected", name="quotation_status")
     purchase_order_status = postgresql.ENUM("pending", "confirmed", "delivered", "cancelled", name="purchase_order_status")
     invoice_status = postgresql.ENUM("draft", "sent", "paid", name="invoice_status")
+
+    # --- Our new enums ---
+    user_role = postgresql.ENUM("admin", "procurement_officer", "manager", "vendor", name="userrole")
+    vendor_status = postgresql.ENUM("active", "inactive", "blacklisted", name="vendorstatus")
+    approval_status = postgresql.ENUM("pending", "approved", "rejected", name="approvalstatus")
+
     rfq_status.create(op.get_bind(), checkfirst=True)
     quotation_status.create(op.get_bind(), checkfirst=True)
     purchase_order_status.create(op.get_bind(), checkfirst=True)
     invoice_status.create(op.get_bind(), checkfirst=True)
+    user_role.create(op.get_bind(), checkfirst=True)
+    vendor_status.create(op.get_bind(), checkfirst=True)
+    approval_status.create(op.get_bind(), checkfirst=True)
+
+    # --- Our tables FIRST (users, vendors) — required by her tables ---
+
+    op.create_table(
+        "users",
+        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+        sa.Column("full_name", sa.String(), nullable=False),
+        sa.Column("email", sa.String(), unique=True, nullable=False),
+        sa.Column("hashed_password", sa.String(), nullable=False),
+        sa.Column("role", user_role, nullable=False),
+        sa.Column("is_active", sa.Boolean(), default=True),
+        sa.Column("created_at", sa.DateTime(), server_default=sa.func.now()),
+    )
+
+    op.create_table(
+        "vendors",
+        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+        sa.Column("company_name", sa.String(), nullable=False),
+        sa.Column("contact_person", sa.String(), nullable=False),
+        sa.Column("email", sa.String(), unique=True, nullable=False),
+        sa.Column("phone", sa.String(), nullable=False),
+        sa.Column("gst_number", sa.String(), nullable=True),
+        sa.Column("category", sa.String(), nullable=True),
+        sa.Column("address", sa.Text(), nullable=True),
+        sa.Column("status", vendor_status, nullable=False, server_default="active"),
+        sa.Column("rating", sa.Float(), default=0.0),
+        sa.Column("created_at", sa.DateTime(), server_default=sa.func.now()),
+    )
+
+    # --- Her original tables (unchanged) ---
 
     op.create_table(
         "rfqs",
@@ -128,8 +168,38 @@ def upgrade() -> None:
         sa.ForeignKeyConstraint(["invoice_id"], ["invoices.id"], ondelete="CASCADE"),
     )
 
+    # --- Our remaining tables (approvals, activity_logs) ---
+
+    op.create_table(
+        "approvals",
+        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+        sa.Column("reference_id", postgresql.UUID(as_uuid=True), nullable=False),
+        sa.Column("reference_type", sa.String(), nullable=False),
+        sa.Column("status", approval_status, nullable=False, server_default="pending"),
+        sa.Column("remarks", sa.Text(), nullable=True),
+        sa.Column("approver_id", postgresql.UUID(as_uuid=True), nullable=False),
+        sa.Column("approved_at", sa.DateTime(), nullable=True),
+        sa.Column("created_at", sa.DateTime(), server_default=sa.func.now()),
+        sa.ForeignKeyConstraint(["approver_id"], ["users.id"]),
+    )
+
+    op.create_table(
+        "activity_logs",
+        sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
+        sa.Column("user_id", postgresql.UUID(as_uuid=True), nullable=False),
+        sa.Column("action", sa.String(), nullable=False),
+        sa.Column("reference_id", postgresql.UUID(as_uuid=True), nullable=True),
+        sa.Column("reference_type", sa.String(), nullable=True),
+        sa.Column("description", sa.Text(), nullable=True),
+        sa.Column("is_read", sa.Boolean(), default=False),
+        sa.Column("created_at", sa.DateTime(), server_default=sa.func.now()),
+        sa.ForeignKeyConstraint(["user_id"], ["users.id"]),
+    )
+
 
 def downgrade() -> None:
+    op.drop_table("activity_logs")
+    op.drop_table("approvals")
     op.drop_table("invoice_items")
     op.drop_index("ix_invoices_invoice_number", table_name="invoices")
     op.drop_table("invoices")
@@ -141,6 +211,11 @@ def downgrade() -> None:
     op.drop_table("rfq_vendors")
     op.drop_table("rfq_items")
     op.drop_table("rfqs")
+    op.drop_table("vendors")
+    op.drop_table("users")
+    postgresql.ENUM(name="approvalstatus").drop(op.get_bind(), checkfirst=True)
+    postgresql.ENUM(name="vendorstatus").drop(op.get_bind(), checkfirst=True)
+    postgresql.ENUM(name="userrole").drop(op.get_bind(), checkfirst=True)
     postgresql.ENUM(name="invoice_status").drop(op.get_bind(), checkfirst=True)
     postgresql.ENUM(name="purchase_order_status").drop(op.get_bind(), checkfirst=True)
     postgresql.ENUM(name="quotation_status").drop(op.get_bind(), checkfirst=True)
