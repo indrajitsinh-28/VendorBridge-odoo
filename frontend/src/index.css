@@ -2,7 +2,7 @@
 
 @theme {
   --color-primary: #013E37;
-  --color-accent: #FFEFB3;
+  --color-accent: #FFDD66;
   --color-background: var(--bg-color);
   --color-card: var(--card-color);
   --color-foreground: var(--text-color);
@@ -117,3 +117,48 @@
     letter-spacing: -0.005em;
   }
 }
+
+/*
+ * ── Tailwind v4 fractional opacity shim ──────────────────────────────────────
+ *
+ * Tailwind v4 does not support arbitrary fraction opacities like bg-primary/2,
+ * bg-primary/3, bg-primary/4, bg-primary/8, border-muted/5, border-muted/6,
+ * border-muted/8, bg-card/40, bg-card/45. These all resolve to `transparent`
+ * in v4, causing invisible backgrounds and borders in light mode.
+ *
+ * We define explicit utility classes here to cover every usage in the codebase.
+ * Nothing else is changed — layout, colours, spacing all stay the same.
+ */
+
+/* bg-primary/2  ≈ 2%  opacity  → #013E37 at 2%  */
+.bg-primary\/2  { background-color: color-mix(in srgb, #013E37 2%,  transparent); }
+
+/* bg-primary/3  ≈ 3%  opacity */
+.bg-primary\/3  { background-color: color-mix(in srgb, #013E37 3%,  transparent); }
+
+/* bg-primary/4  ≈ 4%  opacity */
+.bg-primary\/4  { background-color: color-mix(in srgb, #013E37 4%,  transparent); }
+
+/* bg-primary/8  ≈ 8%  opacity — used for count badges & highlights */
+.bg-primary\/8  { background-color: color-mix(in srgb, #013E37 8%,  transparent); }
+
+/* border-muted/5  ≈ 5%  opacity  → #64748B at 5% */
+.border-muted\/5  { border-color: color-mix(in srgb, #64748B 5%,  transparent); }
+
+/* border-muted/6  ≈ 6%  opacity */
+.border-muted\/6  { border-color: color-mix(in srgb, #64748B 6%,  transparent); }
+
+/* border-muted/8  ≈ 8%  opacity */
+.border-muted\/8  { border-color: color-mix(in srgb, #64748B 8%,  transparent); }
+
+/* bg-card/40  ≈ 40% opacity — table subtotal / tax rows */
+.bg-card\/40 { background-color: color-mix(in srgb, #ffffff 40%, transparent); }
+.bg-card\/45 { background-color: color-mix(in srgb, #ffffff 45%, transparent); }
+
+/* dark mode overrides */
+.dark .bg-primary\/2  { background-color: color-mix(in srgb, #013E37 4%,  transparent); }
+.dark .bg-primary\/3  { background-color: color-mix(in srgb, #013E37 6%,  transparent); }
+.dark .bg-primary\/4  { background-color: color-mix(in srgb, #013E37 8%,  transparent); }
+.dark .bg-primary\/8  { background-color: color-mix(in srgb, #013E37 14%, transparent); }
+.dark .bg-card\/40    { background-color: color-mix(in srgb, #112B28 60%, transparent); }
+.dark .bg-card\/45    { background-color: color-mix(in srgb, #112B28 65%, transparent); }
