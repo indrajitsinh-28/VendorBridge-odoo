@@ -21,7 +21,8 @@ import {
   Mail,
   Printer,
   Download,
-  AlertCircle
+  AlertCircle,
+  Search
 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
@@ -116,6 +117,20 @@ export function POInvoice() {
   const [emailTo, setEmailTo] = useState("");
   const [emailSubject, setEmailSubject] = useState("");
   const [emailBody, setEmailBody] = useState("");
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredDocs = useMemo(() => {
+    return documents.filter((doc) => {
+      const matchSearch =
+        !searchQuery ||
+        doc.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.poNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.vendor.orgName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.items.some((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchSearch;
+    });
+  }, [documents, searchQuery]);
 
   // UI responsive states
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -409,16 +424,26 @@ export function POInvoice() {
         {/* 3. MAIN WORKFLOW BODY */}
         <div className="flex-1 flex flex-col md:flex-row overflow-hidden print:w-full print:p-0">
           
-          {/* Master Side Panel: List of POs / Invoices - print:hidden */}
+           {/* Master Side Panel: List of POs / Invoices - print:hidden */}
           <aside className="w-full md:w-80 border-r border-muted/10 bg-card overflow-y-auto flex-shrink-0 flex flex-col transition-all print:hidden">
-            <div className="p-4 border-b border-muted/10">
-              <span className="text-xs font-semibold text-muted uppercase tracking-wider">
+            <div className="p-4 border-b border-muted/10 space-y-3">
+              <span className="text-xs font-semibold text-muted uppercase tracking-wider block">
                 {isPOPage ? "Purchase Orders Logs" : "Generated Invoices"}
               </span>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted" />
+                <input
+                  type="text"
+                  placeholder={isPOPage ? "Search POs..." : "Search invoices..."}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full h-8 pl-8 pr-3 rounded-lg bg-background border border-muted/20 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
+                />
+              </div>
             </div>
             
             <nav className="flex-1 p-2 space-y-1">
-              {documents.map((doc) => {
+              {filteredDocs.map((doc) => {
                 const isSelected = doc.id === selectedDoc.id;
                 
                 const statusBadge =

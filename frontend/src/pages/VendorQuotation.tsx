@@ -703,6 +703,26 @@ export function VendorQuotation() {
     { title: "RFQ Response Initiated", desc: "Quotation draft created response initialized.", time: "Today, 12:40 PM" }
   ]);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredItems = useMemo(() => {
+    if (!searchQuery) return items;
+    return items.filter(
+      (item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.unit.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [items, searchQuery]);
+
+  const filteredActivities = useMemo(() => {
+    if (!searchQuery) return activities;
+    return activities.filter(
+      (act) =>
+        act.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        act.desc.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [activities, searchQuery]);
+
   // 3. Auto Calculations
   const totals = useMemo(() => {
     let subtotal = 0;
@@ -948,6 +968,8 @@ export function VendorQuotation() {
               </span>
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search RFQs, Quotations..."
                 className="w-full pl-9 pr-4 py-2 text-sm bg-background/50 border border-muted/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all text-foreground"
               />
@@ -1086,7 +1108,7 @@ export function VendorQuotation() {
 
               {/* Section 2: Pricing Details (Editable Table) */}
               <QuotationTable
-                items={items}
+                items={filteredItems}
                 onUpdateItem={handleUpdateItem}
                 onAddItem={handleAddItem}
                 onRemoveItem={handleRemoveItem}
@@ -1125,7 +1147,7 @@ export function VendorQuotation() {
                 </h4>
                 
                 <div className="relative pl-5 border-l border-muted/15 space-y-4">
-                  {activities.map((act, index) => (
+                  {filteredActivities.map((act, index) => (
                     <div key={index} className="relative">
                       <span className="absolute -left-[27px] top-0.5 w-3.5 h-3.5 rounded-full bg-card border border-muted/20 flex items-center justify-center">
                         <span className={`w-1.5 h-1.5 rounded-full ${index === 0 ? "bg-primary dark:bg-accent" : "bg-muted"}`}></span>

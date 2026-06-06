@@ -19,7 +19,8 @@ import {
   XCircle,
   AlertCircle,
   ThumbsUp,
-  ShieldCheck
+  ShieldCheck,
+  Search
 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
@@ -120,6 +121,21 @@ export function Approvals() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredApprovals = useMemo(() => {
+    return approvals.filter((app) => {
+      const matchSearch =
+        !searchQuery ||
+        app.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.rfqCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.summary.vendor.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchSearch;
+    });
+  }, [approvals, searchQuery]);
 
   // Selected Approval Object
   const selectedApproval = useMemo(() => {
@@ -429,12 +445,22 @@ export function Approvals() {
           
           {/* Master Side Panel: List of Approvals */}
           <aside className="w-full md:w-80 border-r border-muted/10 bg-card overflow-y-auto flex-shrink-0 flex flex-col transition-all">
-            <div className="p-4 border-b border-muted/10">
-              <span className="text-xs font-semibold text-muted uppercase tracking-wider">Approval Actions Required</span>
+            <div className="p-4 border-b border-muted/10 space-y-3">
+              <span className="text-xs font-semibold text-muted uppercase tracking-wider block">Approval Actions Required</span>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted" />
+                <input
+                  type="text"
+                  placeholder="Search approvals..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full h-8 pl-8 pr-3 rounded-lg bg-background border border-muted/20 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
+                />
+              </div>
             </div>
             
             <nav className="flex-1 p-2 space-y-1">
-              {approvals.map((app) => {
+              {filteredApprovals.map((app) => {
                 const isSelected = app.id === selectedApproval.id;
                 
                 const statusBadge =
