@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 
@@ -12,8 +11,15 @@ import { DashboardLayout } from './layouts/DashboardLayout';
 
 // Dashboard pages
 import { DashboardPage } from './pages/dashboard/DashboardPage';
-import { VendorsPage } from './pages/dashboard/VendorsPage';
-import { PlaceholderPage } from './pages/dashboard/PlaceholderPage';
+
+// Custom Standalone Pages
+import { Vendor } from './pages/Vendor';
+import { VendorQuotation } from './pages/VendorQuotation';
+import { RFQ } from './pages/RFQ';
+import { Approvals } from './pages/Approvals';
+import { POInvoice } from './pages/POInvoice';
+import { ActivityLogs } from './pages/ActivityLogs';
+import { Reports } from './pages/Reports';
 
 function App() {
   return (
@@ -25,18 +31,20 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-          {/* Dashboard Routes */}
+          {/* Nested Dashboard Routes */}
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/vendors" element={<VendorsPage />} />
-            <Route path="/rfqs" element={<PlaceholderPage title="RFQs" description="Manage your Request for Quotations from vendors." />} />
-            <Route path="/quotations" element={<PlaceholderPage title="Quotations" description="Review and compare vendor quotations." />} />
-            <Route path="/approvals" element={<PlaceholderPage title="Approvals" description="Manage pending approvals and sign-offs." />} />
-            <Route path="/purchase-orders" element={<PlaceholderPage title="Purchase Orders" description="Track and manage all purchase orders." />} />
-            <Route path="/invoices" element={<PlaceholderPage title="Invoices" description="View and process vendor invoices." />} />
-            <Route path="/reports" element={<PlaceholderPage title="Reports" description="Analytics and procurement reports." />} />
-            <Route path="/activity-logs" element={<PlaceholderPage title="Activity Logs" description="Audit trail of all procurement activities." />} />
           </Route>
+
+          {/* Standalone ERP Pages */}
+          <Route path="/vendors" element={<Vendor />} />
+          <Route path="/quotations" element={<VendorQuotation />} />
+          <Route path="/rfqs" element={<RFQ />} />
+          <Route path="/approvals" element={<Approvals />} />
+          <Route path="/purchase-orders" element={<POInvoice />} />
+          <Route path="/invoices" element={<POInvoice />} />
+          <Route path="/activity-logs" element={<ActivityLogs />} />
+          <Route path="/reports" element={<Reports />} />
 
           {/* Default redirect */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

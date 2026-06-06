@@ -5,7 +5,6 @@ import {
   Plus,
   Menu,
   X,
-  SlidersHorizontal,
   FileDown,
   Upload,
   Activity,
@@ -23,11 +22,14 @@ import {
   Trash,
   Check,
   Eye,
-  FileSpreadsheet
+  FileSpreadsheet,
+  BarChart3,
+  LogOut
 } from "lucide-react";
 import { Button } from "../Components/ui/Button";
 import { ThemeToggle } from "../Components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 // Sub-component 1: StatusBadge
 interface StatusBadgeProps {
@@ -649,6 +651,7 @@ export function SubmissionModal({
 // MAIN PAGE COMPONENT: VendorQuotation
 export function VendorQuotation() {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   // 1. Mock Data Setup
   const RFQ_MOCK: RFQInfo = {
     id: "VB-RFQ-2026-089",
@@ -791,55 +794,63 @@ export function VendorQuotation() {
     <div className="flex min-h-screen bg-background text-foreground transition-colors duration-300">
       
       {/* Sidebar Navigation - Desktop */}
-      <aside className="hidden lg:flex flex-col w-64 bg-card border-r border-muted/10 shrink-0 h-screen sticky top-0 transition-all duration-300">
-        <div className="p-6 border-b border-muted/10 flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-            <span className="text-white font-extrabold text-xl tracking-wider">V</span>
+      <aside className="hidden lg:flex flex-col w-64 bg-primary text-white shrink-0 h-screen sticky top-0 border-r border-white/5 shadow-xl transition-all duration-300">
+        <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10">
+          <div className="w-8 h-8 rounded-lg bg-accent text-primary flex items-center justify-center font-black text-sm">
+            VB
           </div>
           <div>
-            <h1 className="font-bold text-lg text-primary dark:text-white leading-none">VendorBridge</h1>
-            <span className="text-xs text-muted font-medium">Procurement ERP</span>
+            <span className="font-bold text-base tracking-wide leading-none block">VendorBridge</span>
+            <span className="text-[10px] text-white/50 font-medium">Procurement ERP</span>
           </div>
         </div>
 
-        <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
+        <nav className="flex-1 px-3 py-6 space-y-0.5 overflow-y-auto">
           {[
-            { name: "Dashboard", icon: LayoutDashboard, active: false, path: "/vendormanagement" },
-            { name: "Vendors", icon: Users, active: false, path: "/vendormanagement" },
-            { name: "RFQs", icon: FileText, active: false, path: "/vendormanagement" },
-            { name: "Quotations (Active)", icon: ShoppingBag, active: true, path: "/vendorquotation" },
-            { name: "Approvals", icon: CheckCircle2, active: false, path: "/vendormanagement" },
-            { name: "Purchase Orders", icon: DollarSign, active: false, path: "/vendormanagement" },
-            { name: "Invoices", icon: FileDown, active: false, path: "/vendormanagement" },
-            { name: "Reports", icon: SlidersHorizontal, active: false, path: "/vendormanagement" },
-            { name: "Activity Logs", icon: Activity, active: false, path: "/vendormanagement" },
-            { name: "Settings", icon: Settings, active: false, path: "/vendormanagement" }
+            { name: "Dashboard", icon: LayoutDashboard, active: false, path: "/dashboard" },
+            { name: "Vendors", icon: Users, active: false, path: "/vendors" },
+            { name: "RFQs", icon: FileText, active: false, path: "/rfqs" },
+            { name: "Quotations", icon: ShoppingBag, active: true, path: "/quotations" },
+            { name: "Approvals", icon: CheckCircle2, active: false, path: "/approvals" },
+            { name: "Purchase Orders", icon: DollarSign, active: false, path: "/purchase-orders" },
+            { name: "Invoices", icon: FileDown, active: false, path: "/invoices" },
+            { name: "Reports", icon: BarChart3, active: false, path: "/reports" },
+            { name: "Activity Logs", icon: Activity, active: false, path: "/activity-logs" },
+            { name: "Settings", icon: Settings, active: false, path: "/settings" }
           ].map((item, idx) => (
             <button
               key={idx}
               onClick={() => navigate(item.path)}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative ${
                 item.active
-                  ? "bg-primary text-white shadow-md shadow-primary/10 dark:bg-accent dark:text-primary dark:shadow-none"
-                  : "text-muted hover:bg-primary/5 hover:text-primary dark:hover:bg-white/5 dark:hover:text-foreground"
+                  ? "bg-white/15 text-white shadow-sm"
+                  : "text-white/60 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <item.icon className="w-4 h-4" />
+              <item.icon className={`w-4.5 h-4.5 transition-transform duration-200 ${item.active ? "text-accent" : "group-hover:scale-110"}`} />
               <span>{item.name}</span>
+              {item.active && (
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+              )}
             </button>
           ))}
         </nav>
 
-        <div className="p-6 border-t border-muted/10">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-full bg-primary/10 text-primary dark:bg-white/10 dark:text-foreground flex items-center justify-center font-bold">
-              OP
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold truncate">Omkar Patil</p>
-              <p className="text-xs text-muted truncate">Procurement Head</p>
-            </div>
-          </div>
+        <div className="p-4 border-t border-white/10">
+          <button
+            onClick={toggleTheme}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition-all text-sm font-medium"
+          >
+            <span className="text-base">{theme === "light" ? "🌙" : "☀️"}</span>
+            <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
+          </button>
+          <button
+            onClick={() => navigate("/login")}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/60 hover:bg-red-500/15 hover:text-red-400 transition-all text-sm font-medium mt-1"
+          >
+            <LogOut className="w-4.5 h-4.5" />
+            <span>Sign Out</span>
+          </button>
         </div>
       </aside>
 
@@ -847,32 +858,37 @@ export function VendorQuotation() {
       {isMobileSidebarOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsMobileSidebarOpen(false)}></div>
-          <aside className="relative flex flex-col w-72 bg-card h-full p-6 shadow-2xl border-r border-muted/10 animate-in slide-in-from-left duration-300">
-            <div className="flex items-center justify-between pb-6 border-b border-muted/10">
-              <div className="flex items-center space-x-3">
-                <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-                  <span className="text-white font-extrabold text-lg">V</span>
+          <aside className="relative flex flex-col w-64 bg-primary text-white h-full p-5 shadow-2xl border-r border-white/5 animate-in slide-in-from-left duration-300">
+            <div className="flex items-center justify-between pb-5 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-accent text-primary flex items-center justify-center font-black text-sm">
+                  VB
                 </div>
                 <div>
-                  <h1 className="font-bold text-base text-primary dark:text-white leading-none">VendorBridge</h1>
-                  <span className="text-xs text-muted font-medium">Procurement ERP</span>
+                  <h1 className="font-bold text-base leading-none">VendorBridge</h1>
+                  <span className="text-[10px] text-white/50">Procurement ERP</span>
                 </div>
               </div>
-              <button className="p-1 rounded-lg hover:bg-muted/10" onClick={() => setIsMobileSidebarOpen(false)}>
+              <button
+                className="p-1.5 rounded-lg hover:bg-white/10 text-white/80"
+                onClick={() => setIsMobileSidebarOpen(false)}
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <nav className="flex-1 py-6 space-y-1.5 overflow-y-auto">
+            <nav className="flex-1 py-5 space-y-0.5 overflow-y-auto">
               {[
-                { name: "Dashboard", icon: LayoutDashboard, active: false, path: "/vendormanagement" },
-                { name: "Vendors", icon: Users, active: false, path: "/vendormanagement" },
-                { name: "RFQs", icon: FileText, active: false, path: "/vendormanagement" },
-                { name: "Quotations (Active)", icon: ShoppingBag, active: true, path: "/vendorquotation" },
-                { name: "Approvals", icon: CheckCircle2, active: false, path: "/vendormanagement" },
-                { name: "Purchase Orders", icon: DollarSign, active: false, path: "/vendormanagement" },
-                { name: "Invoices", icon: FileDown, active: false, path: "/vendormanagement" },
-                { name: "Settings", icon: Settings, active: false, path: "/vendormanagement" }
+                { name: "Dashboard", icon: LayoutDashboard, active: false, path: "/dashboard" },
+                { name: "Vendors", icon: Users, active: false, path: "/vendors" },
+                { name: "RFQs", icon: FileText, active: false, path: "/rfqs" },
+                { name: "Quotations", icon: ShoppingBag, active: true, path: "/quotations" },
+                { name: "Approvals", icon: CheckCircle2, active: false, path: "/approvals" },
+                { name: "Purchase Orders", icon: DollarSign, active: false, path: "/purchase-orders" },
+                { name: "Invoices", icon: FileDown, active: false, path: "/invoices" },
+                { name: "Reports", icon: BarChart3, active: false, path: "/reports" },
+                { name: "Activity Logs", icon: Activity, active: false, path: "/activity-logs" },
+                { name: "Settings", icon: Settings, active: false, path: "/settings" }
               ].map((item, idx) => (
                 <button
                   key={idx}
@@ -880,15 +896,35 @@ export function VendorQuotation() {
                     setIsMobileSidebarOpen(false);
                     navigate(item.path);
                   }}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                    item.active ? "bg-primary text-white dark:bg-accent dark:text-primary" : "text-muted hover:bg-primary/5 hover:text-primary dark:hover:bg-white/5"
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    item.active ? "bg-white/15 text-white" : "text-white/60 hover:bg-white/10"
                   }`}
                 >
-                  <item.icon className="w-4 h-4" />
+                  <item.icon className="w-4.5 h-4.5" />
                   <span>{item.name}</span>
                 </button>
               ))}
             </nav>
+
+            <div className="border-t border-white/10 pt-4 space-y-1">
+              <button
+                onClick={() => {
+                  toggleTheme();
+                  setIsMobileSidebarOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/60 hover:bg-white/10 text-sm font-medium"
+              >
+                <span className="text-base">{theme === "light" ? "🌙" : "☀️"}</span>
+                <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
+              </button>
+              <button
+                onClick={() => navigate("/login")}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-500/15 text-sm font-medium"
+              >
+                <LogOut className="w-4.5 h-4.5" />
+                <span>Sign Out</span>
+              </button>
+            </div>
           </aside>
         </div>
       )}

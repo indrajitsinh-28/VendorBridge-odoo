@@ -1,4 +1,3 @@
-import React from "react";
 import { Eye, Pencil, Trash2, ArrowUpDown } from "lucide-react";
 import { cn } from "../../utils/cn";
 import { StatusBadge } from "./StatusBadge";

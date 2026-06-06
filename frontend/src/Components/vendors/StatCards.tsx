@@ -1,4 +1,3 @@
-import React from "react";
 import { Users, UserCheck, Clock, Ban, TrendingUp, TrendingDown } from "lucide-react";
 import { cn } from "../../utils/cn";
 import type { Vendor } from "../../data/vendors";

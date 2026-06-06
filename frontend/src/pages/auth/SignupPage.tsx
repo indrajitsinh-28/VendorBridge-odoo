@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, User, Briefcase } from "lucide-react";
 import { AuthLayout } from "../../layouts/AuthLayout";
@@ -55,11 +56,11 @@ export function SignupPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (validate()) {
       console.log("Signup form submitted:", formData);
-      navigate("/vendormanagement");
+      navigate("/dashboard");
     }
   };
 
