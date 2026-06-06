@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import  { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { PageLoader, SpinnerLoader } from './Components/ui/PageLoader';
@@ -24,6 +24,7 @@ const Invoices         = lazy(() => import('./pages/Invoices').then(m => ({ defa
 const ActivityLogs     = lazy(() => import('./pages/ActivityLogs').then(m => ({ default: m.ActivityLogs })));
 const Reports          = lazy(() => import('./pages/Reports').then(m => ({ default: m.Reports })));
 const SettingsPage     = lazy(() => import('./pages/Settings').then(m => ({ default: m.SettingsPage })));
+const NotFoundPage     = lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
 function App() {
   return (
@@ -150,7 +151,14 @@ function App() {
 
           {/* Default redirect */}
           <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<SpinnerLoader />}>
+                <NotFoundPage />
+              </Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

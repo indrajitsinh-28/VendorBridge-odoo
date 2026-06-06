@@ -760,6 +760,11 @@ export function Reports() {
         </div>
       )}
 
+      {/* Click-outside to close header dropdowns */}
+      {(isProfileOpen || isNotificationsOpen) && (
+        <div className="fixed inset-0 z-30" onClick={() => { setIsProfileOpen(false); setIsNotificationsOpen(false); }} />
+      )}
+
     </div>
   );
 }

@@ -1294,12 +1294,9 @@ export function VendorQuotation() {
               )}
             </div>
 
-            <div className="flex items-center justify-end space-x-3 pt-6 mt-6 border-t border-muted/15">
-              <Button onClick={() => setIsPreviewModalOpen(false)}>Close Preview</Button>
-            </div>
-
-          </div>
-        </div>
+      {/* Click-outside to close header dropdowns */}
+      {(isProfileOpen || isNotificationsOpen) && (
+        <div className="fixed inset-0 z-30" onClick={() => { setIsProfileOpen(false); setIsNotificationsOpen(false); }} />
       )}
 
     </div>

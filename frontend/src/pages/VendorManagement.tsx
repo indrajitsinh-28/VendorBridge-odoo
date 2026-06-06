@@ -2164,15 +2164,9 @@ Detailed summary and system logs exported to system folder.
               </div>
             </div>
 
-            <div className="flex items-center justify-end mt-6 pt-4 border-t border-muted/5 space-x-3">
-              <Button variant="outline" size="sm" onClick={() => setIsReportOpen(false)}>Cancel</Button>
-              <Button size="sm" onClick={handleDownloadReport} className="flex items-center gap-1.5">
-                <Download className="w-3.5 h-3.5" />
-                Generate TXT Report
-              </Button>
-            </div>
-          </div>
-        </div>
+      {/* Click-outside to close header dropdowns */}
+      {(isProfileOpen || isNotificationsOpen) && (
+        <div className="fixed inset-0 z-30" onClick={() => { setIsProfileOpen(false); setIsNotificationsOpen(false); }} />
       )}
 
     </div>
