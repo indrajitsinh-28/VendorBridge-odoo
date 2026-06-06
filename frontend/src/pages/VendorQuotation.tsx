@@ -828,7 +828,7 @@ export function VendorQuotation() {
               }`}
             >
               <item.icon className={`w-4.5 h-4.5 transition-transform duration-200 ${item.active ? "text-accent" : "group-hover:scale-110"}`} />
-              <span>{item.name}</span>
+              <span>{item.name.replace(" (Active)", "")}{item.active ? " (Active)" : ""}</span>
               {item.active && (
                 <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               )}
@@ -901,7 +901,7 @@ export function VendorQuotation() {
                   }`}
                 >
                   <item.icon className="w-4.5 h-4.5" />
-                  <span>{item.name}</span>
+                  <span>{item.name.replace(" (Active)", "")}{item.active ? " (Active)" : ""}</span>
                 </button>
               ))}
             </nav>

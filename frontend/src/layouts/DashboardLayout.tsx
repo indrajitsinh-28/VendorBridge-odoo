@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -32,10 +32,12 @@ const NAV_ITEMS = [
   { icon: Receipt, label: "Invoices", to: "/invoices" },
   { icon: BarChart3, label: "Reports", to: "/reports" },
   { icon: Activity, label: "Activity Logs", to: "/activity-logs" },
+  { icon: Settings, label: "Settings", to: "/settings" },
 ];
 
 export function DashboardLayout() {
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -100,7 +102,7 @@ export function DashboardLayout() {
                       isActive ? "text-accent" : "group-hover:scale-110"
                     )}
                   />
-                  {label}
+                  {label}{isActive && " (Active)"}
                   {isActive && (
                     <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent" />
                   )}
@@ -110,7 +112,7 @@ export function DashboardLayout() {
           ))}
         </nav>
 
-        {/* Theme toggle at bottom */}
+        {/* Theme toggle and sign out at bottom */}
         <div className="px-3 pb-4 border-t border-white/10 pt-3">
           <button
             onClick={toggleTheme}
@@ -119,9 +121,12 @@ export function DashboardLayout() {
             <span className="text-base">{theme === "light" ? "🌙" : "☀️"}</span>
             {theme === "light" ? "Dark Mode" : "Light Mode"}
           </button>
-          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/60 hover:bg-white/10 hover:text-white transition-all duration-200 text-sm font-medium mt-0.5">
-            <Settings className="w-4.5 h-4.5" />
-            Settings
+          <button
+            onClick={() => navigate("/login")}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/60 hover:bg-red-500/15 hover:text-red-400 transition-all text-sm font-medium mt-0.5"
+          >
+            <LogOut className="w-4.5 h-4.5" />
+            Sign Out
           </button>
         </div>
       </aside>

@@ -20,6 +20,7 @@ import { Approvals } from './pages/Approvals';
 import { POInvoice } from './pages/POInvoice';
 import { ActivityLogs } from './pages/ActivityLogs';
 import { Reports } from './pages/Reports';
+import { SettingsPage } from './pages/Settings';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/invoices" element={<POInvoice />} />
           <Route path="/activity-logs" element={<ActivityLogs />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/settings" element={<SettingsPage />} />
 
           {/* Default redirect */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
