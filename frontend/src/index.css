@@ -7,6 +7,9 @@
   --color-card: var(--card-color);
   --color-foreground: var(--text-color);
   --color-muted: var(--text-muted);
+
+  /* Inter as the sole font family */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 @layer base {
@@ -21,13 +24,96 @@
     --bg-color: #0B1F1C;
     --card-color: #112B28;
     --text-color: #F8FAFC;
-    --text-muted: #94a3b8; /* slightly lighter than 64748B for dark mode readability */
+    --text-muted: #94a3b8;
+  }
+
+  /* ── Global reset ── */
+  *, *::before, *::after {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  html {
+    /* Crisp subpixel rendering — matches Linear / Stripe */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11"; /* Inter's alt numerals & punctuation */
   }
 
   body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;        /* comfortable base for ERP dense layouts */
+    line-height: 1.6;
+    letter-spacing: -0.01em; /* Inter reads tighter at UI sizes */
     @apply transition-colors duration-300;
+  }
+
+  /* ── Font hierarchy ── */
+
+  /* Page titles  — Inter 700 */
+  h1 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+  }
+
+  /* Section headings — Inter 600 */
+  h2 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+
+  /* Card titles — Inter 600 */
+  h3 {
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+  }
+
+  h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+  }
+
+  /* Body text — Inter 400 */
+  p {
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+  }
+
+  /* Labels & nav — Inter 500, handled via utility classes */
+  label {
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  /* Buttons — Inter 500–600 */
+  button {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  /* Inputs, selects, textareas — Inter 400 */
+  input, select, textarea {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  /* Tables — Inter 400–500 */
+  th {
+    font-weight: 600;
+    letter-spacing: 0.02em; /* uppercase tracking for column headers */
+  }
+
+  td {
+    font-weight: 400;
+    letter-spacing: -0.005em;
   }
 }
