@@ -666,7 +666,7 @@ export function VendorManagement() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `vendorbridge_vendors_${new Date().toISOString().split("T")[0]}.csv`);
+    link.setAttribute("download", `vyaparsetu_vendors_${new Date().toISOString().split("T")[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -713,7 +713,7 @@ export function VendorManagement() {
         gstNumber: "27IMPORT1234A1Z",
         panNumber: "IMPORT1234A",
         contactPerson: "Mock Importer",
-        email: "imported@vendorbridge-mock.com",
+        email: "imported@vyaparsetu-mock.com",
         phone: "+91 90000 00000",
         address: "Imported industrial zone, Mumbai",
         status: "Pending Verification",
@@ -759,7 +759,7 @@ Detailed summary and system logs exported to system folder.
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `VendorBridge_Report_${Date.now()}.txt`;
+    link.download = `VyaparSetu_Report_${Date.now()}.txt`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -777,7 +777,7 @@ Detailed summary and system logs exported to system folder.
             <span className="text-white font-extrabold text-xl tracking-wider">V</span>
           </div>
           <div>
-            <h1 className="font-bold text-lg text-primary dark:text-white leading-none">VendorBridge</h1>
+            <h1 className="font-bold text-lg text-primary dark:text-white leading-none">VyaparSetu</h1>
             <span className="text-xs text-muted font-medium">Procurement ERP</span>
           </div>
         </div>
@@ -839,7 +839,7 @@ Detailed summary and system logs exported to system folder.
                   <span className="text-white font-extrabold text-lg">V</span>
                 </div>
                 <div>
-                  <h1 className="font-bold text-base text-primary dark:text-white leading-none">VendorBridge</h1>
+                  <h1 className="font-bold text-base text-primary dark:text-white leading-none">VyaparSetu</h1>
                   <span className="text-xs text-muted font-medium">Procurement ERP</span>
                 </div>
               </div>
@@ -971,7 +971,7 @@ Detailed summary and system logs exported to system folder.
                 <div className="absolute right-0 mt-3 w-56 bg-card rounded-2xl border border-muted/15 shadow-xl py-2 z-50 animate-in fade-in duration-200">
                   <div className="px-4 py-2 border-b border-muted/10">
                     <p className="font-semibold text-sm">Omkar Patil</p>
-                    <p className="text-xs text-muted">omkar.patil@vendorbridge.com</p>
+                    <p className="text-xs text-muted">omkar.patil@vyaparsetu.com</p>
                   </div>
                   <div className="py-1">
                     <button className="w-full text-left px-4 py-2 text-sm text-muted hover:bg-primary/5 hover:text-primary dark:hover:bg-white/5 dark:hover:text-white transition-colors flex items-center space-x-2">

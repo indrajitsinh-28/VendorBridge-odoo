@@ -60,7 +60,7 @@ const INITIAL_INVOICES: InvoiceDocument[] = [
     invoiceDate: "21 May, 2025",
     dueDate: "21 June, 2025",
     billTo: {
-      orgName: "VendorBridge Procurement Corp",
+      orgName: "VyaparSetu Procurement Corp",
       address: "123 Business Park, Ahmedabad, Gujarat - 380015",
       gstin: "253834381FB"
     },
@@ -82,7 +82,7 @@ const INITIAL_INVOICES: InvoiceDocument[] = [
     invoiceDate: "22 May, 2025",
     dueDate: "22 June, 2025",
     billTo: {
-      orgName: "VendorBridge Procurement Corp",
+      orgName: "VyaparSetu Procurement Corp",
       address: "123 Business Park, Ahmedabad, Gujarat - 380015",
       gstin: "253834381FB"
     },
@@ -184,8 +184,8 @@ export function POInvoice() {
 
   const openEmailModal = () => {
     setEmailTo(selectedDoc.vendor.orgName.toLowerCase().replace(/\s+/g, "") + "@company.com");
-    setEmailSubject(`Procurement ${isPOPage ? "Purchase Order" : "Invoice"} ${isPOPage ? selectedDoc.poNumber : selectedDoc.id} - VendorBridge`);
-    setEmailBody(`Dear accounts team,\n\nPlease find attached the official procurement document reference ${isPOPage ? selectedDoc.poNumber : selectedDoc.id} generated on behalf of VendorBridge Procurement Corp.\n\nBest regards,\nArjun Kapoor\nProcurement Manager`);
+    setEmailSubject(`Procurement ${isPOPage ? "Purchase Order" : "Invoice"} ${isPOPage ? selectedDoc.poNumber : selectedDoc.id} - VyaparSetu`);
+    setEmailBody(`Dear accounts team,\n\nPlease find attached the official procurement document reference ${isPOPage ? selectedDoc.poNumber : selectedDoc.id} generated on behalf of VyaparSetu Procurement Corp.\n\nBest regards,\nArjun Kapoor\nProcurement Manager`);
     setIsEmailModalOpen(true);
   };
 
@@ -215,11 +215,9 @@ export function POInvoice() {
       <aside className="hidden lg:flex flex-col w-64 bg-primary text-white shrink-0 h-screen sticky top-0 border-r border-white/5 shadow-xl transition-all duration-300 print:hidden">
         {/* Logo Section */}
         <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10">
-          <div className="w-8 h-8 rounded-lg bg-accent text-primary flex items-center justify-center font-black text-sm">
-            VB
-          </div>
+          <img src="/logo.png" alt="VyaparSetu Logo" className="w-8 h-8 rounded-lg object-contain bg-white p-1 flex-shrink-0" />
           <div>
-            <span className="font-bold text-base tracking-wide leading-none block">VendorBridge</span>
+            <span className="font-bold text-base tracking-wide leading-none block">VyaparSetu</span>
             <span className="text-[10px] text-white/50 font-medium">Procurement ERP</span>
           </div>
         </div>
@@ -274,11 +272,9 @@ export function POInvoice() {
           <aside className="relative flex flex-col w-64 bg-primary text-white h-full p-5 shadow-2xl border-r border-white/5 animate-in slide-in-from-left duration-300">
             <div className="flex items-center justify-between pb-5 border-b border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-accent text-primary flex items-center justify-center font-black text-sm">
-                  VB
-                </div>
+                <img src="/logo.png" alt="VyaparSetu Logo" className="w-8 h-8 rounded-lg object-contain bg-white p-1 flex-shrink-0" />
                 <div>
-                  <h1 className="font-bold text-base leading-none">VendorBridge</h1>
+                  <h1 className="font-bold text-base leading-none">VyaparSetu</h1>
                   <span className="text-[10px] text-white/50">Procurement ERP</span>
                 </div>
               </div>

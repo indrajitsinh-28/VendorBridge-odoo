@@ -62,11 +62,9 @@ export function DashboardLayout() {
         {/* Logo */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center flex-shrink-0">
-              <span className="text-primary font-black text-sm">VB</span>
-            </div>
+            <img src="/logo.png" alt="VyaparSetu Logo" className="w-8 h-8 rounded-lg object-contain bg-white p-1 flex-shrink-0" />
             <div>
-              <span className="text-white font-bold text-base leading-none">VendorBridge</span>
+              <span className="text-white font-bold text-base leading-none">VyaparSetu</span>
               <p className="text-white/50 text-[10px] mt-0.5">Procurement ERP</p>
             </div>
           </div>

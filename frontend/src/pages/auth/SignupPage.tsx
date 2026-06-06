@@ -69,7 +69,7 @@ export function SignupPage() {
     <AuthLayout>
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-foreground">Create an Account</h2>
-        <p className="text-muted mt-2">Join VendorBridge to streamline your procurement.</p>
+        <p className="text-muted mt-2">Join VyaparSetu to streamline your procurement.</p>
       </div>
 
       <FormCard>

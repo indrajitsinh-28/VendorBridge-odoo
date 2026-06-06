@@ -13,11 +13,9 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-white mb-12">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
-              <span className="text-primary font-bold text-xl leading-none">V</span>
-            </div>
-            <span className="text-2xl font-bold tracking-tight">VendorBridge</span>
+          <div className="flex items-center gap-3 text-white mb-12">
+            <img src="/logo.png" alt="VyaparSetu Logo" className="w-8 h-8 rounded-lg object-contain bg-white p-1" />
+            <span className="text-2xl font-bold tracking-tight">VyaparSetu</span>
           </div>
 
           <div className="max-w-md space-y-6 mt-12 lg:mt-32">
